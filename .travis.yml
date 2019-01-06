@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+- 8.9.0
+cache:
+  directories:
+  - node_modules
+before_install:
+- npm install hexo-cli -g
+install:
+- npm install
+script:
+- hexo clean
+- hexo generate
+after_script:
+  - cd ./public
+  - git init
+  - git config user.name "Tinyxiu"
+  - git config user.email "Tinyxiu@protonmail.com"
+  - git add .
+  - git commit -m "TravisCI 自动部署"
+  # Github Pages
+  - git push --force --quiet "https://${CI_TOKEN}@${GH_REF}" master:master 
+
+
+branches:
+  only:
+  - hexo
+
+env:
+ global:
+   # Github Pages
+   - GH_REF: github.com/Tinyxiu/Tinyxiu.github.io
