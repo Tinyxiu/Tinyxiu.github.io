@@ -2,9 +2,13 @@
 title: {{ title }}
 date: {{ date }}
 tags:
+- Testing
+- Testing
 ---
 
 {% centerquote %}blah blah blah{% endcenterquote %}
+
+<!-- more -->
 
 {% fullimage /image-url, alt, title %}
 
