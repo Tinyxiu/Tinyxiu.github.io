@@ -1,6 +1,7 @@
 ---
 title: The First Blog
 date: 2019-01-06 19:46:12
+categories: 随笔
 tags:
 - 时间
 - 2019 新年计划
