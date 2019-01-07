@@ -1,6 +1,7 @@
 ---
 title: {{ title }}
 date: {{ date }}
+categories: Testing
 tags:
 - Testing
 - Testing
