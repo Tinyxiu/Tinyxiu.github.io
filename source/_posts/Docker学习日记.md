@@ -60,11 +60,11 @@ Docker在mac os上，同样用虚拟化技术xhyve或者virtualbox来实现（[h
 
 其次，能创建何种类型Docker
 
-Docker在Linux上共享内核，只能创建Linux类Docker。 
+1. Docker在Linux上共享内核，只能创建Linux类Docker。 
 
-Docker在Windows上，可以创建Linux类Docker和Windows类Docker。 
+2. Docker在Windows上，可以创建Linux类Docker和Windows类Docker。 
 
-Docker在Mac os上，只能创建Linux类Docker，不能创建Mac OS的Docker。
+3. Docker在Mac os上，只能创建Linux类Docker，不能创建Mac OS的Docker。
 
 Docker的虚拟化最简单的其实就是隔离机制，类似于用`chroot`命令讲根目录隔离一样，不过Docker运用的是内核（Kernel）3.8版本支持的一些新特性，这使得Docker在Linux上能获得几乎等同于Native的体验。
 
@@ -72,4 +72,5 @@ Linux下通过内核自带的Namespace与Cgroups进行实现，Windows下可通�
 
 # DAY 2
 
+对于 Docker 的核心实现原理，可以查看这篇文章，[Docker 核心技术与实现原理](https://draveness.me/docker)（不过目前我有很多地方都不是很读得懂。）
 
