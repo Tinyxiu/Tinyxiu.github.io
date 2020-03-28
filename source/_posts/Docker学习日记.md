@@ -52,11 +52,11 @@ date: 2020-03-27 16:49:25
 
 首先，从内核共享与否
 
-Docker在Linux上共享内核，无需虚拟化，完全支持Native功能（[https://docs.docker.com/engine/installation/linux/](https://docs.docker.com/engine/installation/linux/%EF%BC%89)）。 
+Docker在Linux上共享内核，无需虚拟化，完全支持Native功能[https://docs.docker.com/engine/installation/linux/](https://docs.docker.com/engine/installation/linux/%EF%BC%89)。 
 
-Docker在windows上，启用Hyper-V（[https://docs.docker.com/docker-for-windows/)](https://docs.docker.com/docker-for-windows/)）或者虚拟化技术[https://docs.docker.com/toolbox/toolbox_install_windows/](https://docs.docker.com/toolbox/toolbox_install_windows/)，通过虚拟机来实现，不共享windows内核。 
+Docker在windows上，启用Hyper-V[https://docs.docker.com/docker-for-windows/](https://docs.docker.com/docker-for-windows/)或者虚拟化技术[https://docs.docker.com/toolbox/toolbox_install_windows/](https://docs.docker.com/toolbox/toolbox_install_windows/)，通过虚拟机来实现，不共享windows内核。 
 
-Docker在mac os上，同样用虚拟化技术xhyve或者virtualbox来实现（[https://docs.docker.com/engine/installation/mac/](https://docs.docker.com/engine/installation/mac/%EF%BC%89%EF%BC%8C%E4%B8%8D%E5%85%B1%E4%BA%ABmac) ），不共享Mac OS 内核。
+Docker在mac os上，同样用虚拟化技术xhyve或者virtualbox来实现（[https://docs.docker.com/engine/installation/mac/](https://docs.docker.com/engine/installation/mac/) ），不共享Mac OS 内核。
 
 其次，能创建何种类型Docker
 
