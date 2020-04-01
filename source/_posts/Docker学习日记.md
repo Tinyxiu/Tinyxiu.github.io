@@ -41,11 +41,11 @@ goal: 1000
 
 我们引入容器的目的其实也很简单，随着计算机技术的不断更新发展，计算机系统、软件、运行环境碎片化情况越来越明显，每个用户计算机的环境都不相同，你怎么知道你的软件，能在各个机器上跑起来？如果某些老旧的模块与当前环境不兼容，那就麻烦了。
 
-环境配置如此麻烦，换一台机器，就要重来一次，旷日费时。很多人想到，能不能从根本上解决问题，软件可以带环境安装？也就是说，安装的时候，把原始环境一模一样地复制过来。为了让用户在使用一些软件的时候不用浪费过多的时间在配置环境上，同时也是为了更多的压榨计算机性能，容器的想法就由此诞生。
+环境配置如此麻烦，换一台机器，就要重来一次，旷日费时。很多人想到，能不能从根本上解决问题，软件可以带环境安装？也就是说，安装的时候，把原始环境一模一样地复制过来。为了让用户在使用一些软件的时候不用浪费过多的时间在配置环境上，同时也是为了灵活使用计算机性能，容器的想法就由此诞生。
 
-其实在容器之前也有类似的，想减少用户配置环境的一些项目，但是原来的想法都比较粗暴，想的都是直接从硬件层面上虚拟出一整个机器，再在其上安装系统，这样在这个虚拟出来的电脑上就能运行一个环境完全虚拟可控的应用程序了。但是随之而来的问题也是很显著的，需要完整的从硬件层面上虚拟出一个机器再在上面套一个系统，系统内再套娃一个应用程序，这么多步虚拟，相应的计算性能的损耗也是惊人的。
+其实在容器之前也有类似的，想减少用户配置环境的一些项目，但是原来的想法都比较粗暴，想的都是直接从硬件层面上虚拟出一整个机器，再在其上安装系统，这样在这个虚拟出来的电脑上就能运行一个环境完全虚拟可控的应用程序了。但是随之而来的问题也是很显著的，需要完整的从硬件层面上虚拟出一个机器再在上面套一个系统，系统内再套娃一个应用程序，这么多层虚拟，相应的计算性能的损耗也是惊人的。
 
-其实在实际日常使用中，我们并不需要完全的虚拟出一个新的操作系统，我们需要的只是在相同系统中虚拟出一个适合程序的运行环境就行。所以更为轻量级的系统层虚拟化就更符合人们的需求。
+其实在实际日常使用中，我们并不需要完全的虚拟出一个新的操作系统，我们需要的只是在相同系统中虚拟出一个完全隔离且适合程序的运行环境就行。所以更为轻量级的系统层虚拟化就进入了人们的视野。
 
 ## Docker 容器的简单实现方法
 
@@ -73,17 +73,15 @@ Linux下通过内核自带的Namespace与Cgroups进行实现，Windows下可通�
 
 # DAY 2
 
-对于 Docker 的核心实现原理，可以查看这篇文章，[Docker 核心技术与实现原理](https://draveness.me/docker)（不过目前我有很多地方都不是很读得懂。）
+对于 Docker 的核心实现原理，可以查看这篇文章，[Docker 核心技术与实现原理](https://draveness.me/docker)（不过目前我有很多地方都不是很读得懂。对于 Linux 内核指令及其层级关系的部分有点晦涩。）
 
-既然大致的明白的 Docker 的原理，那么就需要我们结合实际情况来进行学习。
-
-## 镜像与容器的基本操作
+既然大致明白 Docker 的原理，那么就要我们结合实际情况来进行学习一下镜像与容器的基本操作。
 
 类似于数据库的增、删、改、查一样，Docker 也有几个比较常规的操作。
 
-### 常规操作
+## 常规操作
 
-#### 获取容器
+### 获取容器
 
 `docker pull [选项] [Docker Registery 地址[:端口]/]仓库名[:标签]`
 
@@ -100,7 +98,7 @@ docker pull ubuntu:16.04
 
 * **--disable-content-trust :**忽略镜像的校验,默认开启
 
-#### 运行容器
+### 运行容器
 
 `docker run [选项] 镜像 [命令]  [ARG...]`
 
@@ -154,7 +152,7 @@ OPTIONS说明：
 
 *   **--volume , -v: **绑定一个卷
 
-#### 删除容器
+### 删除镜像
 
 `docker rm [选项] 容器[容器...]`
 
@@ -173,17 +171,17 @@ docker rm ubuntu
 
 *   **-v :**删除与容器关联的卷。
 
-### 初阶操作
+## 初阶操作
 
-#### 列出镜像
+### 列出镜像
 
 `docker image ls`
 
-#### 镜像大小
+### 镜像大小
 
 `docker system df`
 
-#### 容器操作
+### 容器操作
 
 `docker start/stop/restart [OPTIONS] CONTAINER [CONTAINER...]`
 
@@ -194,7 +192,7 @@ docker start/stop/restart CONTAINER
 
 说明：启动已被停止的容器 CONTAINER /停止运行中的容器 CONTAINER /重启容器 CONTAINER。
 
-#### 进入容器
+### 进入容器
 
 `docker exec [命令] -it [参数]`
 
@@ -207,7 +205,7 @@ docker exec -it ubunut /bin/bash
 
 > 注:使用`docker exec`的好处在于，如果从这个 stdin 中退出不会导致容器停止。
 
-#### 删除容器
+### 删除容器（作用同上删除镜像部分）
 
 `docker container rm CONTAINER`
 
@@ -221,9 +219,9 @@ docker container rm ubuntu
 注：`docker container prune`为删除所有处于停止状态的容器，`docker container ls -a`删除所有容器。
 
 
-### 进阶操作
+## 进阶操作
 
-#### Docker 镜像定制
+### Docker 镜像定制
 
 由于 Docker 的镜像文件属性是只读，所以如果改变了由此镜像创造的 Container 能通过很简单的`docker diff CONTAINER`指令直接看到对容器存储层的改动。
 
@@ -434,11 +432,11 @@ HEALTHCHECK [选项] CMD <命令>：设置检查容器健康状况的命令 HEAL
 
 * 格式：`ONBUILD <其它指令>`
 
-#### Docker 数据共享
+### Docker 数据共享
 
->构思怎么写啊啊啊啊啊啊啊啊啊
+>构思怎么写啊啊啊啊啊啊啊啊
 
-#### Docker 网络模式
+### Docker 网络模式
 
 >构思怎么写啊啊啊啊啊啊啊啊啊，感觉日记不应该记录这么多的内容，而是更少一点，精细化。配上图文。降低理解难度那就更好了。
 
@@ -466,7 +464,7 @@ Compose ⽀持主流操作系统。Compose 可以通过pip、⼆进制⽂件、 
 
 ### 使⽤
 
-接着编写 Dockerfile ⽂件，内容为:
+编写 Dockerfile ⽂件，内容为:
 
 ```shell
 FROM python:3.6-alpine
@@ -476,7 +474,7 @@ RUN pip install redis flask
 CMD ["python", "app.py"]
 ```
 
-然后是编写 docker-compose.yml ⽂件，这个是 Compose 使⽤的主模板⽂件。
+然后是编写 docker-compose.yml ⽂件，这个是 Compose 使⽤的主模板⽂件。这里设置了两个服务，分别是`Web`和`redis`，在编译程序时如果要实现容器内软件互联 host 处填写的是服务对应的名称。
 
 ```shell
 version: '3'
@@ -496,6 +494,100 @@ services:
 `docker-compose up`
 
 此时访问本地 5000 端⼝，每次刷新⻚⾯，计数就会加 1。
+
+### Compose 命令
+
+对于 Compose 来说，⼤部分命令的对象既可以是项⽬本身，也可以指定为项⽬中的服务或者容器。
+
+如果没有特别的说明，命令对象将是项⽬，这意味着项⽬中所有的服务都会受到命令影响。
+
+执⾏docker-compose [COMMAND] --help或者docker-compose help [COMMAND]可以查看具体某个命令的使⽤格式。
+
+docker-compose 命令的基本的使⽤格式是:
+
+`docker-compose [-f=<arg>...] [options] [COMMAND] [ARGS...]`
+
+命令选项：
+
+* -f, --file FILE 指定使⽤的 Compose 模板⽂件，默认为 docker-compose.yml，可以多次指定。
+
+* -p, --project-name NAME 指定项⽬名称，默认将使⽤所在⽬录名称作为项⽬名。
+
+* --x-networking 使⽤ Docker 的可拔插⽹络后端特性
+
+* --x-network-driver DRIVER 指定⽹络后端的驱动，默认为 bridge
+
+* --verbose 输出更多调试信息。
+
+* -v, --version 打印版本并退出。
+
+build 格式为docker-compose build [options] [SERVICE...]。 构建（重新构建）项⽬中的服务容器。服务容器⼀旦构建后，将会带上⼀个标记名，例如对于 web 项⽬中的⼀个 db 容器，可能是 web_db。
+
+可以随时在项⽬⽬录下运⾏ docker-compose build 来重新构建服务。选项包括：
+
+* --force-rm 删除构建过程中的临时容器。
+
+* --no-cache 构建镜像过程中不使⽤ cache（这将加⻓构建过程）。
+
+* --pull 始终尝试通过 pull 来获取更新版本的镜像。
+
+config: 验证 Compose ⽂件格式是否正确，若正确则显示配置，若格式错误显示错误原因。
+
+down：此命令将会停⽌ up 命令所启动的容器，并移除⽹络
+
+exec：进⼊指定的容器。
+
+help：获得⼀个命令的帮助。
+
+images：列出 Compose ⽂件中包含的镜像。
+
+kill：格式为docker-compose kill [options] [SERVICE...]。通过发送 SIGKILL 信号来强制停⽌服务容
+
+器。⽀持通过 -s 参数来指定发送的信号，例如通过如下指令发送 SIGINT 信号。
+
+`docker-compose kill -s SIGINT`
+
+logs：格式为docker-compose logs [options] [SERVICE...]，查看服务容器的输出。默认情况下，docker-compose 将对不同的服务输出使⽤不同的颜⾊来区分。可以通过 --no-color 来关闭颜⾊。该命令在调试问题的时候⼗分有⽤。
+
+pause：格式为docker-compose pause [SERVICE...]，暂停⼀个服务容器。
+
+port：格式为docker-compose port [options] SERVICE PRIVATE_PORT，打印某个容器端⼝所映射的公共端⼝。选项：
+
+--protocol=proto 指定端⼝协议，tcp（默认值）或者 udp。
+
+--index=index 如果同⼀服务存在多个容器，指定命令对象容器的序号（默认为 1）。
+
+ps：格式为docker-compose ps [options] [SERVICE...]，列出项⽬中⽬前的所有容器。选项：
+
+-q 只打印容器的 ID 信息。
+
+pull：格式为 docker-compose pull [options] [SERVICE...] ，拉取服务依赖的镜像。选项：
+
+--ignore-pull-failures 忽略拉取镜像过程中的错误。
+
+push：推送服务依赖的镜像到 Docker 镜像仓库。
+
+restart：格式为docker-compose restart [options] [SERVICE...]，重启项⽬中的服务。选项：
+
+-t, --timeout TIMEOUT 指定重启前停⽌容器的超时（默认为 10 秒）。
+
+rm：格式为docker-compose rm [options] [SERVICE...],删除所有（停⽌状态的）服务容器。推荐先执
+
+⾏ docker-compose stop 命令来停⽌容器。选项：
+
+-f, --force 强制直接删除，包括⾮停⽌状态的容器。⼀般尽量不要使⽤该选项。
+
+-v 删除容器所挂载的数据卷。
+
+run：格式为docker-compose run [options] [-p PORT...] [-e KEY=VAL...] SERVICE [COMMAND]
+
+[ARGS...]，在指定服务上执⾏⼀个命令。例如：
+
+`docker-compose run ubuntu ping docker.com`
+
+将会启动⼀个 ubuntu 服务容器，并执⾏ ping docker.com 命令。默认情况下，如果存在关联，则所有
+
+关联的服务将会⾃动被启动，除⾮这些服务已经在运⾏中。
 
 ## Docker Machine
 
